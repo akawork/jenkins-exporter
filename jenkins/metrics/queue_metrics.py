@@ -24,7 +24,7 @@ def make_metrics(queue):
         item_name = item['name']
         queue_id = str(item_id)
         metric.add_metric(labels = [queue_id, item_name], 
-                        value = item.get_in_queue_duration(item_id))
+                        value = queue.get_in_queue_duration(item_id))
                         
     list_metrics.append(metric)
 

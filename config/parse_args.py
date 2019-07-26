@@ -4,8 +4,8 @@ import os
 import sys
 import configparser
 
-# config = configparser.ConfigParser()
-# config.read(os.environ.get('JENKINS_CONFIG_FILE'))
+config = configparser.ConfigParser()
+config.read(os.environ.get('JENKINS_CONFIG_FILE'))
 
 def parse_args():
     
@@ -17,24 +17,21 @@ def parse_args():
         metavar='server',
         required=False,
         help='server url from the jenkins api',
-        # default=config['DEFAULT']['JENKINS_SERVER']
-        default='http://172.27.100.200:8080'
+        default=config['DEFAULT']['JENKINS_SERVER']
     )
     parser.add_argument(
         '--user',
         metavar='user',
         required=False,
         help='jenkins api user',
-        # default=config['DEFAULT']['JENKINS_USERNAME']
-        default='test_token'
+        default=config['DEFAULT']['JENKINS_USERNAME']
     )
     parser.add_argument(
         '--passwd',
         metavar='passwd',
         required=False,
         help='jenkins api password',
-        # default=config['DEFAULT']['JENKINS_PASWORD']
-        default='123456'
+        default=config['DEFAULT']['JENKINS_PASWORD']
     )
     parser.add_argument(
         '-p', '--port',
@@ -42,8 +39,7 @@ def parse_args():
         required=False,
         type=int,
         help='Listen to this port',
-        # default=int(config['DEFAULT']['VIRTUAL_PORT'])
-        default=9118
+        default=int(config['DEFAULT']['VIRTUAL_PORT'])
     )
     parser.add_argument(
         '-k', '--insecure',

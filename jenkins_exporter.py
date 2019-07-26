@@ -19,6 +19,7 @@ if __name__ == "__main__":
                                         args.insecure)
 
     print('Start run Jenkin exporter at server: {}'.format(args.server))
+    print('Port: {}'.format(args.port))
 
     REGISTRY.register(jenkins_collector)
     start_http_server(port_number)

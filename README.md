@@ -19,7 +19,7 @@ Usage:
       ```
 3. Run Jenkins Exporter by docker:
 
-   3.1. Don't use file *config.ini*: 
+   3.1. Don't use config file:
       ```sh
       $ docker run -p 9118:9118 -d jenkins_exporter \
                                  [-s --server <jenkins server url>] \
@@ -37,9 +37,9 @@ Usage:
          - `--passwd`: password for authentication
          - `p --port`: port to display metrics
 
-   3.2. Use *config.ini*:
+   3.2. Use config file:
       
-      - First, you have to create file *config.ini* has the following content:
+      - First, you have to create a config file has the following content:
       ```
       [DEFAULT]
       JENKINS_SERVER = http://jenkins_server:8080  ;your jenkins server
@@ -49,7 +49,7 @@ Usage:
       ```
       - run docker file:
       ```
-      $ docker run -p 9118:9118 -d --name jenkins_exporter \
-                  -v "/link/to/config.ini:/root/config/config.ini" \
+      $ docker run -p 9118:9118 -d \
+                  -v "/link/to/your/config_file.ini:/root/config/config.ini" \
                   jenkins_exporter
       ```

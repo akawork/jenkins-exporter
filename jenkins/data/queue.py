@@ -73,7 +73,7 @@ def standardize_item_info(item):
     new_item['stuck'] = item['stuck']
 
     item_task = item['task']
-    new_item['name'] = item_task['name'] if name in item_task else 'N/A'
+    new_item['name'] = item_task['name'] if 'name' in item_task else 'N/A'
 
     return new_item
 

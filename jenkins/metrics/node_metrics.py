@@ -89,6 +89,8 @@ def make_metrics(nodes):
             if nodes.is_online_node(node_id) == False:
                 continue
             monitor_data = nodes.get_system_info(node_id, mlabel)
+            if monitor_data is None:
+                continue
             node_type = nodes.get_type(node_id)
             metric.add_metric(labels=[node_type, node_id], value=monitor_data)
             
