@@ -24,11 +24,11 @@ class Jenkins(object):
 
 class JenkinsCollector(object):
 
-    def __init__(self, server, user, passwd, insecure=True):
+    def __init__(self, server, user, passwd, insecure=False):
         self.server = server
         self.insecure = insecure
         self.auth = (user, passwd)
-        
+
 
     def collect(self):
         jenkins = Jenkins(server=self.server,
@@ -40,7 +40,7 @@ class JenkinsCollector(object):
 
         for metric in metrics:
             yield metric
-        
+
 
 
 class JenkinsMetrics(object):
@@ -59,5 +59,3 @@ class JenkinsMetrics(object):
         self.metrics = metrics
 
         return self.metrics
-
-
