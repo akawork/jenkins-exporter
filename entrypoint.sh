@@ -8,8 +8,8 @@ if [ $JENKINS_USERNAME ]; then
     sed -i "s/username/$JENKINS_USERNAME/g" config.ini
 fi
 
-if [ $JENKINS_PASWORD ]; then
-    sed -i "s/password/$JENKINS_PASWORD/g" config.ini
+if [ $JENKINS_PASSWORD ]; then
+    sed -i "s/password/$JENKINS_PASSWORD/g" config.ini
 fi
 
 # Run exporter

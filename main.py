@@ -15,7 +15,7 @@ if __name__ == "__main__":
     config.read("config.ini")
     jenkins_collector = JenkinsCollector(server=config['DEFAULT']['JENKINS_SERVER'],
                                          user=config['DEFAULT']['JENKINS_USERNAME'],
-                                         passwd=config['DEFAULT']['JENKINS_PASWORD'])
+                                         passwd=config['DEFAULT']['JENKINS_PASSWORD'])
 
     REGISTRY.register(jenkins_collector)
     start_http_server(9118)
