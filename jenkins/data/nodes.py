@@ -9,18 +9,23 @@ NODE_SLAVE = 'hudson.slaves.SlaveComputer'
 NODE_LABELS = 'totalExecutors,busyExecutors,\
 computer[_class,displayName,offline,numExecutors,monitorData[*]]'
 SWAP_SPACE_MONITOR = 'hudson.node_monitors.SwapSpaceMonitor'
-SWAP_SPACE_LABELS = ['availablePhysicalMemory',
-                    'availableSwapSpace',
-                    'totalPhysicalMemory',
-                    'totalSwapSpace']
+SWAP_SPACE_LABELS = [
+    'availablePhysicalMemory',
+    'availableSwapSpace',
+    'totalPhysicalMemory',
+    'totalSwapSpace'
+]
 TEMPORARY_SPACE_MONITOR = 'hudson.node_monitors.TemporarySpaceMonitor'
 DISK_SPACE_MONITOR = 'hudson.node_monitors.DiskSpaceMonitor'
-MONITOR_LABELS = ['availablePhysicalMemory',
-                'availableSwapSpace',
-                'totalPhysicalMemory',
-                'totalSwapSpace',
-                'temporarySpace',
-                'diskSpace']
+MONITOR_LABELS = [
+    'availablePhysicalMemory',
+    'availableSwapSpace',
+    'totalPhysicalMemory',
+    'totalSwapSpace',
+    'temporarySpace',
+    'diskSpace'
+]
+
 
 class Nodes(object):
 
@@ -34,7 +39,7 @@ class Nodes(object):
 
     def get_list_nodes(self):
         return self.list_nodes
-    
+
     def get_total_nodes(self):
         return len(self.list_nodes)
 
@@ -45,16 +50,16 @@ class Nodes(object):
         if node_type == 'all':
             return self.executor_info['total']
         count = 0
-        
+
         for node_id in self.list_nodes:
             node = self.node_info[node_id]
             if node_type == 'slave':
-                if node['master'] == False:
+                if node['master'] is False:
                     count += 1
             else:
-                if node['master'] == True:
+                if node['master'] is True:
                     count += 1
-        return count      
+        return count
 
     def get_busy_executors(self):
         return self.executor_info['busy']
@@ -72,7 +77,7 @@ class Nodes(object):
     # Count total node online
     def get_total_online_nodes(self):
         count = 0
-        for node_id in self.list_nodes: 
+        for node_id in self.list_nodes:
             # node_id == node_info['display_name']
             node = self.node_info[node_id]
             if self.is_online_node(node_id):
@@ -92,7 +97,7 @@ class Nodes(object):
         return self.monitor_labels
 
     def get_description(self, monitor_label):
-        return re.sub('(\_)([a-z])', ' \\2', monitor_label)
+        return re.sub(r'(\_)([a-z])', ' \\2', monitor_label)
 
     def get_type(self, node_id):
         node = self.node_info[node_id]
@@ -100,6 +105,7 @@ class Nodes(object):
             return 'master'
         else:
             return 'slave'
+
 
 # Create query to get all node
 def make_query(jenkins):
@@ -109,6 +115,7 @@ def make_query(jenkins):
     url = jenkins.server + '/computer' + API_SUFFIX
     params = {'tree': tree}
     return url, params
+
 
 # Get all node
 def get_list_nodes(jenkins):
@@ -133,7 +140,7 @@ def get_list_nodes(jenkins):
     executor_info['busy'] = raw_data['busyExecutors'] \
         if 'busyExecutors' in raw_data else 0
     executor_info['free'] = executor_info['total'] - executor_info['busy']
-    
+
     for node in nodes:
         node_class = node['_class']
         node_name = node['displayName']
@@ -144,14 +151,17 @@ def get_list_nodes(jenkins):
         else:
             node_id = '(' + node_name + ')'
         list_nodes.append(node_id)
-        node_info[node_id] = standardize_node_info(node=node, 
-                                                master=node_master)
+        node_info[node_id] = standardize_node_info(
+            node=node,
+            master=node_master
+        )
 
     return list_nodes, node_info, executor_info
 
+
 def standardize_node_info(node, master):
     new_node = {}
-    
+
     new_node['display_name'] = node['displayName']
     new_node['online'] = not(node['offline'])
     new_node['total_executors'] = node['numExecutors']
@@ -186,20 +196,22 @@ def standardize_node_info(node, master):
 
     return new_node
 
+
 # Check node is slave or not
 def is_slave(class_name):
     return class_name == NODE_SLAVE
+
 
 # Check node is online or not
 def is_online_node(node):
     return node['online']
 
-# Convert from camelCase to snake_case 
+
+# Convert from camelCase to snake_case
 def change_to_snake_case(camel):
     return re.sub('([A-Z])', '_\\1', camel).lower()
 
-# Convert from camelCase to description 
+
+# Convert from camelCase to description
 def change_to_description(camel):
     return re.sub('([A-Z])', ' \\1', camel)
-
-
