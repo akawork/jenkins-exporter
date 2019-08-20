@@ -1,7 +1,5 @@
 # Jenkins Exporter
 
-[![Build Status](https://travis-ci.com/hieupmse05244/Jenkins-Exporter.svg?token=tiDKLJRUGUzN6WmAHhVA&branch=master)](https://travis-ci.com/hieupmse05244/Jenkins-Exporter)
-
 Jenkins exporter is a exporter to get metrics of Jenkins server, deployed on FSOFT environment.
 
 Jenkins exporter has written in python3. It's tested in Jenkins version 2.143 and 2.176.1. 
