@@ -1,6 +1,6 @@
 # Jenkins Exporter
 
-[![Build Status](https://travis-ci.com/hieupmse05244/Jenkins-exporter.svg?branch=master)](https://travis-ci.com/hieupmse05244/Jenkins-exporter)
+[![Build Status](https://travis-ci.org/akawork/Jenkins-exporter.svg?branch=master)](https://travis-ci.org/akawork/Jenkins-exporter)
 
 Jenkins exporter is a exporter to get metrics of Jenkins server, deployed on FSOFT environment.
 
