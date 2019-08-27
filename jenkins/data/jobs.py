@@ -9,6 +9,9 @@ MAX_TREE_DEGREE = 10
 PIPELINE = "org.jenkinsci.plugins.workflow.job.WorkflowJob"
 MULTIBRANCH = \
     "org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject"
+PIPELINE_MULTIBRANCH = \
+    "org.jenkinsci.plugins.pipeline.multibranch.defaults" \
+    ".PipelineMultiBranchDefaultsProject"
 FOLDER = "com.cloudbees.hudson.plugins.folder.Folder"
 ORGANIZATION_FOLDER = 'jenkins.branch.OrganizationFolder'
 MAX_GET_BUILDS = 12
@@ -139,8 +142,10 @@ def standardize_job_info(job):
         builds['info'] = job['builds']
         builds['total'] = last_build['number']
 
-    new_job['full_name'] = job['fullName']
-    new_job['color'] = job['color']
+    new_job['full_name'] = job['fullName'] \
+        if 'fullName' in job else 'N/A'
+    new_job['color'] = job['color'] \
+        if 'color' in job else 'N/A'
     new_job['last_build'] = last_build
     new_job['builds'] = builds
 
@@ -162,6 +167,7 @@ def get_now_timestamp():
 def is_pipeline(class_name):
     if class_name == FOLDER or \
        class_name == ORGANIZATION_FOLDER or \
+       class_name == PIPELINE_MULTIBRANCH or \
        class_name == MULTIBRANCH:
         return False
     return True
