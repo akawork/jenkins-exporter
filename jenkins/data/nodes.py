@@ -170,7 +170,10 @@ def standardize_node_info(node, master):
     monitor_data_raw = node['monitorData']
     monitor_data = {}
 
-    swap_space = monitor_data_raw[SWAP_SPACE_MONITOR]
+    if SWAP_SPACE_MONITOR in monitor_data_raw:
+        swap_space = monitor_data_raw[SWAP_SPACE_MONITOR]
+    else:
+        swap_space = None
     if swap_space is None:
         for swap_label in SWAP_SPACE_LABELS:
             key = change_to_snake_case(swap_label)
@@ -180,13 +183,19 @@ def standardize_node_info(node, master):
             key = change_to_snake_case(swap_label)
             monitor_data[key] = swap_space[swap_label]
 
-    temporary_space = monitor_data_raw[TEMPORARY_SPACE_MONITOR]
+    if TEMPORARY_SPACE_MONITOR in monitor_data_raw:
+        temporary_space = monitor_data_raw[TEMPORARY_SPACE_MONITOR]
+    else:
+        temporary_space = None
     if temporary_space is None:
         monitor_data['temporary_space'] = None
     else:
         monitor_data['temporary_space'] = temporary_space['size']
 
-    disk_space = monitor_data_raw[DISK_SPACE_MONITOR]
+    if DISK_SPACE_MONITOR in monitor_data_raw:
+        disk_space = monitor_data_raw[DISK_SPACE_MONITOR]
+    else:
+        disk_space = None
     if disk_space is None:
         monitor_data['disk_space'] = None
     else:
